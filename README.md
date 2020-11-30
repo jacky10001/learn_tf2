@@ -2,14 +2,10 @@
 Try to previous code remake.
 
 
-Package:
+Package: <br>
+  numpy==1.18.5 <br>
+  opencv-python==4.4.0.42 <br>
+  tensorflow==2.3.0 <br>
 
-  numpy==1.18.5
-  
-  opencv-python==4.4.0.42
-  
-  tensorflow==2.3.0
-
-IDE:
-
-spyder==4.1.4
+IDE: <br>
+  spyder==4.1.4 
