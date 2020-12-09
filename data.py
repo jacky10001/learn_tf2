@@ -27,10 +27,10 @@ import tensorflow as tf
 
 
 def get_data_list(directory_Am, directory_Ph, shuffle=False, seed=1):
-    def get_image_list(directory_Am, directory_Ph):
+    def step1_get_image_list(directory_Am, directory_Ph):
         return glob.glob(directory_Am), glob.glob(directory_Ph)
     
-    def get_label_list(data_path):
+    def step2_get_label_list(data_path):
         lbl_name = []
         labels = []
         for _path in data_path:
@@ -44,7 +44,7 @@ def get_data_list(directory_Am, directory_Ph, shuffle=False, seed=1):
             labels.append(_lbl_idx)
         return labels
     
-    def shuffle_data_sequence(lists_A, lists_P, lists_L, seed):
+    def step3_shuffle_data_sequence(lists_A, lists_P, lists_L, seed):
         shuffle_idx = list(range(len(lists_A)))
         for i in range(seed):
             random.shuffle(shuffle_idx)
@@ -53,12 +53,14 @@ def get_data_list(directory_Am, directory_Ph, shuffle=False, seed=1):
         lists_L = [lists_L[idx] for idx in shuffle_idx]
         return lists_A, lists_P, lists_L
     
-    
-    lists_A, lists_P = get_image_list(directory_Am, directory_Ph)
-    lists_L = get_label_list(lists_A)
+    lists_A, lists_P = \
+        step1_get_image_list(directory_Am, directory_Ph)
+        
+    lists_L = \
+        step2_get_label_list(lists_A)
     
     if shuffle:
-        return shuffle_data_sequence(lists_A, lists_P, lists_L, seed)
+        return step3_shuffle_data_sequence(lists_A, lists_P, lists_L, seed)
     return lists_A, lists_P, lists_L
 
 
@@ -94,10 +96,12 @@ def get_dataset(data_Am, data_Ph, data_Lb,
     if num_classes <= len(set(data_Lb)):
         num_classes = len(set(data_Lb))
     
+    # process image from filepath list
     data_Im = (data_Am, data_Ph)
     ds_Im = tf.data.Dataset.from_tensor_slices(data_Im)
     ds_Im = ds_Im.map(lambda Am, Ph: load_img(Am, Ph))
     
+    # process label from label list
     ds_Lb = tf.data.Dataset.from_tensor_slices(data_Lb)
     ds_Lb = ds_Lb.map(lambda x: load_lbl(x, one_hot, num_classes))
     
@@ -108,3 +112,19 @@ def get_dataset(data_Am, data_Ph, data_Lb,
     return dataset
     
     
+
+
+
+# def preprcess(data, image_height, image_width, num_channels):
+    # def load_mat(b_path):
+        # filepath = b_path.decode()    # numpy byte to string (utf-8)
+        # mata_para = sio.loadmat(filepath)    # read MAT file
+        # x = mata_para['W']    # your variable name
+        # x = x.astype('float32')    # set data type, please same with 'tout'
+        # return x
+    # return tf.numpy_function(load_mat, inp=[data], Tout=[tf.float32])
+
+# def get_dataset(data, image_height, image_width, num_channels):
+    # ds = tf.data.Dataset.from_tensor_slices(data)
+    # ds = ds.map(lambda data: preprcess(data, image_height, image_width, num_channels))
+    # return ds
