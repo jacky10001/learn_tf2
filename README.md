@@ -1,5 +1,6 @@
 # Learn TensorFlowf 2 (tf.keras)
 Try to previous code remake.
+Feed two image data for classifier.
 
 
 Package: <br>
