@@ -16,9 +16,9 @@ from data import get_data_list, get_dataset
 
 
 #%%  參數設置
-LOG_DIR = r'D:\YJ\MyRepo\learn_tf2\log'
-DIRECTORY_AM = r'D:\YJ\ioplab\glass-defect\data\gd_T01\*\*_A.png'
-DIRECTORY_PH = r'D:\YJ\ioplab\glass-defect\data\gd_T01\*\*_P.png'
+LOG_DIR = r'D:\Github\learn_tf2\log'
+DIRECTORY_AM = r'D:\Datasets\IOPLAB\GDSets\*\*_A.png'
+DIRECTORY_PH = r'D:\Datasets\ioplab\GDSets\*\*_P.png'
 
 TRAIN_BATCH_SIZE = 100
 TRAIN_EPOCHS = 20
